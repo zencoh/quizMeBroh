@@ -5,8 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coding Quiz</title>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    
+    <h1>Coding Quiz</h1>
+    <P class="intro">The following quiz will ask you ten code-related questions. If you get a question wrong, 
+        5 seconds will be subtracted from the time you have left.</P>
+
+    <!--Container for all of the content for the quiz to work-->
+    <div class="container">
+        <div id="questionContainer" class="hide">
+            <div id="questions"></div>
+            <div id="answerOptions"></div>
+                <button class="btn" id="btn1">1</button>
+                <button class="btn" id="btn2">2</button>
+                <button class="btn" id="btn3">3</button>
+        </div>
+        <div class="controls">
+            <button id="startBtn">Start Quiz</button>
+        </div>
+    </div>
+
+    <!--Division for timer-->
+    <div id="countdown" class="timer"></div>
+
+    <!--Section for quiz questions-->
+    <section id="quiz">
+
+    </section>
+    <div>
+        <ul id="highscore"></ul>
+    </div>
+
+    <script src="assets/script.js"></script>
 </body>
 </html>
