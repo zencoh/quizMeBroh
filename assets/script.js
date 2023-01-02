@@ -19,7 +19,10 @@ var highScoreInit = document.getElementById("highscore-initials");
 var displayScore = document.getElementById("highscore-score");
 var endGameBtns = document.getElementById("endGameBtns");
 
-// Quiz questions
+// starts quiz
+startBtn.addEventListener("click",startQuiz);
+
+// quiz questions
 var quizQuestions = [{
     question: "Inside which HTML element do we put the JavaScript?",
     choiceA: "script",
@@ -63,14 +66,24 @@ var quizQuestions = [{
     choiceD: "Math.round(7.25)",
     correctAnswer: "d"},   
     ];
-// Other global variables
-var finalQuestionIndex = quizQuestions.length;
-var currentQuestionIndex = 0;
-var timeLeft = 60;
-var penalty = 5;
-var timerInterval;
-var score = 0;
-var correct;
+
+// checks answer to see if correct
+function checkAnswer(answer){
+    correct = quizQuestions[currentQuestionIndex].correctAnswer;
+
+    if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
+        score++;
+        currentQuestionIndex++;
+        generateQuizQuestion();
+
+    }else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex){
+        currentQuestionIndex++;
+        generateQuizQuestion();
+        timeLeft -= penalty;
+    }else{
+        showScore();
+    }
+}
 
 // this function goes through the array containing the quiz questions to generate the questions
 function generateQuizQuestion(){
@@ -86,13 +99,22 @@ function generateQuizQuestion(){
     buttonD.innerHTML = currentQuestion.choiceD;
 };
 
-// Start Quiz function starts the TimeRanges, hides the start button, and displays the first quiz question.
+// other global variables
+var finalQuestionIndex = quizQuestions.length;
+var currentQuestionIndex = 0;
+var timeLeft = 60;
+var penalty = 5;
+var timerInterval;
+var score = 0;
+var correct;
+
+// starts timer and displays first question
 function startQuiz(){
     gameOver.style.display = "none";
     startQuizSec.style.display = "none";
     generateQuizQuestion();
 
-    //Timer
+    //timer
     timerInterval = setInterval(function() {
         timeLeft--;
         quizTimer.textContent = "Time left: " + timeLeft;
@@ -104,7 +126,8 @@ function startQuiz(){
       }, 1000);
     quiz.style.display = "block";
 }
-// This function is the end page screen that displays your score after either completeing the quiz or upon timer run out
+
+// displays game over screen and asks user to enter initials
 function showScore(){
     quiz.style.display = "none"
     gameOver.style.display = "flex";
@@ -113,8 +136,7 @@ function showScore(){
     finalScore.innerHTML = "You got " + score + " out of " + quizQuestions.length + " correct!";
 }
 
-// On click of the submit button, we run the function highscore that saves and stringifies the array of high scores already saved in local stoage
-// as well as pushing the new user name and score into the array we are saving in local storage. Then it runs the function to show high scores.
+// saves and stringifies the high scores in local stoage, also the user initials
 submitScore.addEventListener("click", function highscore(){
     
     
@@ -142,7 +164,7 @@ submitScore.addEventListener("click", function highscore(){
     
 });
 
-// This function clears the list for the high scores and generates a new high score list from local storage
+// pulls local storage to show high score list
 function generateHighscores(){
     highScoreInit.innerHTML = "";
     displayScore.innerHTML = "";
@@ -157,7 +179,7 @@ function generateHighscores(){
     }
 }
 
-// This function displays the high scores page
+// displays high scores
 function showHighscore(){
     startQuizSec.style.display = "none"
     gameOver.style.display = "none";
@@ -168,14 +190,14 @@ function showHighscore(){
     generateHighscores();
 }
 
-// This function clears the local storage of the high scores and clears the text from the score board
+// clears local storage from high score list and initials
 function clearScore(){
     window.localStorage.clear();
     highScoreInit.textContent = "";
     displayScore.textContent = "";
 }
 
-// This function sets all the variables back to their original values and shows the home page to enable replay of the quiz
+// resets timer and questions if user wanted to play again
 function replayQuiz(){
     highScoreCont.style.display = "none";
     gameOver.style.display = "none";
@@ -184,24 +206,3 @@ function replayQuiz(){
     score = 0;
     currentQuestionIndex = 0;
 }
-
-// This function checks the response to each answer 
-function checkAnswer(answer){
-    correct = quizQuestions[currentQuestionIndex].correctAnswer;
-
-    if (answer === correct && currentQuestionIndex !== finalQuestionIndex){
-        score++;
-        currentQuestionIndex++;
-        generateQuizQuestion();
-
-    }else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex){
-        currentQuestionIndex++;
-        generateQuizQuestion();
-        timeLeft -= penalty;
-    }else{
-        showScore();
-    }
-}
-
-// This button starts the quiz!
-startBtn.addEventListener("click",startQuiz);
