@@ -1,22 +1,22 @@
-var quizBod = document.getElementById("quiz");
-var resultsEl = document.getElementById("result");
-var FNLScoreEl = document.getElementById("finalScore");
-var GODiv = document.getElementById("gameover");
-var questionsEl = document.getElementById("questions");
-var quizTimer = document.getElementById("timer");
-var startBtn = document.getElementById("startbtn");
 var startQuizDiv = document.getElementById("startpage");
-var HSContain = document.getElementById("highscoreContainer");
-var HSDiv = document.getElementById("high-scorePage");
-var HSInputName = document.getElementById("initials");
-var HSDisplayName = document.getElementById("highscore-initials");
-var endGameBtns = document.getElementById("endGameBtns");
-var submitScoreBtn = document.getElementById("submitScore");
-var HSDisplayScore = document.getElementById("highscore-score");
+var startBtn = document.getElementById("startbtn");
+var quizBod = document.getElementById("quiz");
+var quizTimer = document.getElementById("timer");
+var questions = document.getElementById("questions");
+var resultsEl = document.getElementById("result");
 var buttonA = document.getElementById("A");
 var buttonB = document.getElementById("B");
 var buttonC = document.getElementById("C");
 var buttonD = document.getElementById("D");
+var GODiv = document.getElementById("gameover");
+var finalScore = document.getElementById("finalScore");
+var HSInputName = document.getElementById("initials");
+var submitScoreBtn = document.getElementById("submitScore");
+var HSContain = document.getElementById("highscoreContainer");
+var HSDiv = document.getElementById("high-scorePage");
+var HSDisplayName = document.getElementById("highscore-initials");
+var HSDisplayScore = document.getElementById("highscore-score");
+var endGameBtns = document.getElementById("endGameBtns");
 
 // Quiz questions
 var quizQuestions = [{
@@ -77,7 +77,7 @@ function generateQuizQuestion(){
         return showScore();
     } 
     var currentQuestion = quizQuestions[currentQuestionIndex];
-    questionsEl.innerHTML = "<p>" + currentQuestion.question + "</p>";
+    questions.innerHTML = "<p>" + currentQuestion.question + "</p>";
     buttonA.innerHTML = currentQuestion.choiceA;
     buttonB.innerHTML = currentQuestion.choiceB;
     buttonC.innerHTML = currentQuestion.choiceC;
@@ -108,7 +108,7 @@ function showScore(){
     GODiv.style.display = "flex";
     clearInterval(timerInterval);
     HSInputName.value = "";
-    FNLScoreEl.innerHTML = "You got " + score + " out of " + quizQuestions.length + " correct!";
+    finalScore.innerHTML = "You got " + score + " out of " + quizQuestions.length + " correct!";
 }
 
 // On click of the submit button, we run the function highscore that saves and stringifies the array of high scores already saved in local stoage
